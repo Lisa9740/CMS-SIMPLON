@@ -10,15 +10,6 @@ export default class Routes{
     static build() {
         Router.get('/', HomePageController.get)
 
-        Router.get('/api/articles', async () => {
-            return await ArticleController.get()
-        })
-        Router.get('/api/article', async () => {
-
-            return await ArticleController.getById()
-        })
-
-
         Router.get('/404', function () {
             let view = Viewer.make('home.ejs', { title : "Page Non Trouvée"})
             return view;

@@ -4,12 +4,13 @@ import {HttpUtils} from "./src/server/core/Server/http";
 import {Request} from "./src/server/core/Server/request";
 import {Response} from "./src/server/core/Server/response";
 import {Route} from "./src/server/core/Routes/route";
+require('dotenv').config()
 
 export class Server {
     private static instance: Server;
 
-    SERVER_ADDRESS:any = '0.0.0.0';
-    SERVER_PORT:any = 3000;
+    SERVER_ADDRESS:any = process.env.SERVER_ADDRESS || '0.0.0.0';
+    SERVER_PORT:any = process.env.PORT || 3000;
 
     private static getInstance(): Server {
         if (!this.instance) {

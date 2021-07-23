@@ -10,18 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AbstractModel = void 0;
+const Query_1 = require("./Query");
 const database_1 = require("../Database/conf/database");
 class AbstractModel {
-    constructor(table, fields, query) {
+    constructor(table, field) {
         this.table = table;
-        this.fields = fields;
-        this.query = query;
+        this.field = field;
+        this.query = new Query_1.Query(this);
     }
     findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             let datas;
             try {
-                datas = yield database_1.Database.query(this.query.select(this.table, this.fields));
+                datas = yield database_1.Database.query(this.query.findAll());
                 return datas;
             }
             catch (e) {
@@ -29,11 +30,11 @@ class AbstractModel {
             }
         });
     }
-    findById(id, value) {
+    findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             let datas;
             try {
-                datas = yield database_1.Database.query(this.query.select(this.table, this.fields, id, value, true));
+                datas = yield database_1.Database.query(this.query.findById(id));
                 return datas;
             }
             catch (e) {

@@ -3,16 +3,11 @@ import article from "../database/model/Article";
 export class ArticleController{
 
     public static async get() {
-        let data = await article.findAll()
-        return data;
+        return await article.findAll();
     }
 
     public static async getById() {
-        let data = await article.findById('id', 1)
-        return data;
+        return await article.findById(1);
     }
 
-    public static post(request, response){
-
-    }
 }

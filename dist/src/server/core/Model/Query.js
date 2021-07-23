@@ -2,14 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Query = void 0;
 class Query {
-    select(table, field, param = null, value = null, hasCondition = false) {
-        if (hasCondition) {
-            return 'SELECT * FROM `' + table + '` ' + this.where(param, value);
-        }
-        return 'SELECT * FROM `' + table + '`';
+    constructor(Model) {
+        this.table = Model.table;
+        this.field = Model.field;
+    }
+    findAll() {
+        return 'SELECT * FROM `' + this.table + '`';
+    }
+    findById(id) {
+        return 'SELECT * FROM `' + this.table + '` WHERE id = ' + id;
     }
     where(param, value) {
-        return 'WHERE ' + param + ' = ' + value;
+        return ' WHERE ' + param + ' = ' + value;
     }
 }
 exports.Query = Query;

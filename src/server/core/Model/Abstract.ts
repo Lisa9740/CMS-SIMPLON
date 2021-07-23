@@ -1,34 +1,34 @@
 import {Query} from "./Query";
-import {Field} from "./Field";
 import {Database} from "../Database/conf/database";
+import {Field} from "./Field";
 
 export abstract class AbstractModel{
-    fields: Field[];
-    table: string;
     query: Query
+    table: string;
+    field: Field[];
 
-    constructor(table: string, fields: Field[], query: Query)
+    constructor(table: string, field: Field[])
     {
         this.table = table
-        this.fields = fields
-        this.query = query
+        this.field = field
+        this.query = new Query(this)
 
     }
 
     async findAll(){
         let datas : {}
         try {
-            datas = await Database.query(this.query.select(this.table, this.fields))
+            datas = await Database.query(this.query.findAll())
             return datas
         } catch (e){
             console.log(e)
         }
     }
 
-    async findById(id, value){
+    async findById(id){
         let datas : {}
         try {
-            datas = await Database.query(this.query.select(this.table, this.fields, id, value, true))
+            datas = await Database.query(this.query.findById(id))
             return datas
         } catch (e) {
             console.log(e)

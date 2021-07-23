@@ -1,14 +1,15 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Server = void 0;
-const router_1 = require("./src/server/routes/core/router");
-const http_1 = require("./src/server/adapter/http");
-const request_1 = require("./src/server/adapter/request");
-const response_1 = require("./src/server/adapter/response");
+const router_1 = require("./src/server/core/Routes/router");
+const http_1 = require("./src/server/core/Server/http");
+const request_1 = require("./src/server/core/Server/request");
+const response_1 = require("./src/server/core/Server/response");
+require('dotenv').config();
 class Server {
     constructor() {
-        this.SERVER_ADDRESS = '0.0.0.0';
-        this.SERVER_PORT = 3000;
+        this.SERVER_ADDRESS = process.env.SERVER_ADDRESS || '0.0.0.0';
+        this.SERVER_PORT = process.env.PORT || 3000;
     }
     static getInstance() {
         if (!this.instance) {
@@ -33,7 +34,6 @@ class Server {
     static start() {
         this.getInstance().startServer();
     }
-    //
     checkRoute(request) {
         let route = router_1.Router.getAll().filter(function (element) {
             if (element.url === request.req.url && element.method === request.req.method) {

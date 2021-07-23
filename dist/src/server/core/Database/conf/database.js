@@ -2,14 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Database = void 0;
 const mysql = require('mysql2');
+require('dotenv').config();
 class Database {
     static connect() {
         return mysql.createConnection({
-            host: 'cms-db',
-            port: '3306',
-            user: 'root',
-            database: 'cms_simplon',
-            password: 'root'
+            host: process.env.HOST_MACHINE_MYSQL_HOST,
+            port: process.env.HOST_MACHINE_MYSQL_PORT,
+            user: process.env.MYSQL_USER,
+            database: process.env.MYSQL_DATABASE,
+            password: process.env.MYSQL_PASSWORD
         });
     }
     static query(sqlQuery) {

@@ -8,23 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ArticleController = void 0;
-const Article_1 = __importDefault(require("../database/model/Article"));
-class ArticleController {
-    static get() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield Article_1.default.findAll();
-        });
-    }
-    static getById() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield Article_1.default.findById(1);
-        });
+const router_1 = require("../../core/Routes/router");
+const ArticleController_1 = require("../../controller/ArticleController");
+class ApiRoutes {
+    static buildApi() {
+        router_1.Router.get('/api/articles', () => __awaiter(this, void 0, void 0, function* () {
+            return yield ArticleController_1.ArticleController.get();
+        }));
+        router_1.Router.get('/api/article', () => __awaiter(this, void 0, void 0, function* () {
+            return yield ArticleController_1.ArticleController.getById();
+        }));
     }
 }
-exports.ArticleController = ArticleController;
-//# sourceMappingURL=ArticleController.js.map
+exports.default = ApiRoutes;
+//# sourceMappingURL=ApiRoutes.js.map

@@ -11,21 +11,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Response = void 0;
 const Viewer_1 = require("../Templating/Viewer");
+const router_1 = require("../Routes/router");
 class Response {
     constructor(res) {
         this.res = res;
     }
+    setHeader(d) {
+        if (!Array.isArray(d) && d instanceof Viewer_1.Viewer) {
+            this.res.writeHead(200, { 'Content-Type': 'text/html' });
+            return d.render();
+        }
+        else {
+            this.res.writeHead(200, { 'Content-Type': 'application/json' });
+            return JSON.stringify(d);
+        }
+    }
     emit(data) {
         return __awaiter(this, void 0, void 0, function* () {
             const d = yield Promise.resolve(data);
-            console.log(typeof data);
-            if (!Array.isArray(d) && d instanceof Viewer_1.Viewer) {
-                this.res.writeHead(200, { 'Content-Type': 'text/html' });
-                return this.res.end(d.render());
+            try {
+                return this.res.end(this.setHeader(d));
             }
-            else {
-                this.res.writeHead(200, { 'Content-Type': 'application/json' });
-                return this.res.end(JSON.stringify(d));
+            catch (e) {
+                this.res.statusCode = 404;
+                return this.res.end(router_1.Router.find('/404').pop().callback());
             }
         });
     }

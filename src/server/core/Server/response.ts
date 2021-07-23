@@ -1,5 +1,6 @@
 import {ServerResponse} from 'http';
 import {Viewer} from "../Templating/Viewer";
+import {Router} from "../Routes/router";
 
 export class Response{
     public res: ServerResponse
@@ -8,20 +9,24 @@ export class Response{
         this.res = res
     }
 
-    async emit(data){
-        const d:any =  await Promise.resolve(data)
-        console.log(typeof data)
-        if (!Array.isArray(d) && d instanceof Viewer){
-            this.res.writeHead(200,{'Content-Type' :'text/html'})
-           return  this.res.end(d.render())
-        }else{
+     setHeader(d){
+        if (!Array.isArray(d) && d instanceof Viewer) {
+            this.res.writeHead(200, {'Content-Type': 'text/html'});
+            return d.render()
+        }else {
             this.res.writeHead(200, {'Content-Type': 'application/json'})
-            return this.res.end(JSON.stringify(d))
+            return JSON.stringify(d)
         }
     }
 
-    // emit(data){
-    //     console.log(this.setHeader(data))
-    // }
+    async emit(data){
+        const d:any =  await Promise.resolve(data)
 
+        try{
+            return  this.res.end(this.setHeader(d));
+        }catch (e){
+            this.res.statusCode = 404
+            return this.res.end(Router.find('/404').pop().callback())
+        }
+    }
 }

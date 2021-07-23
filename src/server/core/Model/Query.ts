@@ -1,16 +1,24 @@
+import {Field} from "./Field";
+import {AbstractModel} from "./Abstract";
+
 export class Query {
+    private field: Field[];
+    private table: string;
 
-    select(table, field, param = null, value = null, hasCondition = false){
-            if (hasCondition){
-                return 'SELECT * FROM `' + table + '` ' + this.where(param, value)
-            }
-            return 'SELECT * FROM `' + table + '`'
-        }
+    constructor(Model: AbstractModel) {
+        this.table = Model.table
+        this.field = Model.field
+    }
 
+    findAll(){
+        return 'SELECT * FROM `' + this.table + '`'
+    }
 
-         where(param: any, value: any) {
-            return 'WHERE ' + param + ' = ' + value
-        }
+    findById(id){
+        return 'SELECT * FROM `' + this.table + '` WHERE id = ' + id
+    }
 
-
+    where(param: any, value: any) {
+        return ' WHERE ' + param + ' = ' + value
+    }
 }
