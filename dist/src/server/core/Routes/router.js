@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Router = void 0;
 const route_1 = require("./route");
-const methodEnum_1 = require("../Utils/methodEnum");
+const methodEnum_1 = require("../Utils/Enum/methodEnum");
 class Router {
     constructor() {
         this.routes = [];
@@ -22,8 +22,9 @@ class Router {
         const instance = this.getInstance();
         instance.add(methodEnum_1.MethodEnum.PUSH, url, callback);
     }
-    delete(url, callback) {
-        return this.routes.push(new route_1.Route(url, methodEnum_1.MethodEnum.DELETE, callback));
+    static delete(url, callback) {
+        const instance = this.getInstance();
+        instance.add(methodEnum_1.MethodEnum.DELETE, url, callback);
     }
     static getAll() {
         return this.getInstance().routes;

@@ -42,6 +42,40 @@ class AbstractModel {
             }
         });
     }
+    create(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield database_1.Database.query(this.query.insert(data));
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
+    update(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const column = data.column;
+                const filterColumn = data.filterColumn;
+                const newData = data.newData;
+                const searchData = data.searchData;
+                return yield database_1.Database.query(this.query.update(column, filterColumn, newData, searchData));
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
+    delete(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield database_1.Database.query(this.query.delete(id));
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
 }
 exports.AbstractModel = AbstractModel;
 //# sourceMappingURL=Abstract.js.map

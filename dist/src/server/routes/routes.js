@@ -7,7 +7,7 @@ class Routes {
     static build() {
         router_1.Router.get('/', HomePageController_1.HomePageController.get);
         router_1.Router.get('/404', function () {
-            let view = Viewer_1.Viewer.make('home.ejs', { title: "Page Non Trouvée" });
+            let view = Viewer_1.Viewer.make('error.ejs', { error: "Page Non Trouvée" });
             return view;
         });
     }

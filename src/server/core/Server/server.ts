@@ -1,9 +1,9 @@
 'use strict';
-import {Router} from "./src/server/core/Routes/router";
-import {HttpUtils} from "./src/server/core/Server/http";
-import {Request} from "./src/server/core/Server/request";
-import {Response} from "./src/server/core/Server/response";
-import {Route} from "./src/server/core/Routes/route";
+import {Router} from "../Routes/router";
+import {HttpUtils} from "./http";
+import {Request} from "./request";
+import {Response} from "./response";
+import {Route} from "../Routes/route";
 require('dotenv').config()
 
 export class Server {

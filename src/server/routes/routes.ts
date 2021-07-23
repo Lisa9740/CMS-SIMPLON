@@ -11,7 +11,7 @@ export default class Routes{
         Router.get('/', HomePageController.get)
 
         Router.get('/404', function () {
-            let view = Viewer.make('home.ejs', { title : "Page Non Trouvée"})
+            let view = Viewer.make('error.ejs', { error : "Page Non Trouvée"})
             return view;
         })
 

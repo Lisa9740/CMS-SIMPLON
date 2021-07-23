@@ -7,4 +7,7 @@ export class Request {
     ) {
         this.req = req
     }
+
+    request(data){
+    }
 }

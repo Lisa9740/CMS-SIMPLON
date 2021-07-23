@@ -25,6 +25,48 @@ class ArticleController {
             return yield Article_1.default.findById(1);
         });
     }
+    static create() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let data = {
+                id: 3,
+                title: 'Je suis un article',
+                content: 'test test content',
+                author: 'Alison'
+            };
+            try {
+                return yield Article_1.default.create(data);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
+    static update() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = {
+                column: 'content',
+                filterColumn: 'id',
+                newData: 'new new',
+                searchData: 2
+            };
+            try {
+                return yield Article_1.default.update(data);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
+    static delete() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield Article_1.default.delete(1);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+    }
 }
 exports.ArticleController = ArticleController;
 //# sourceMappingURL=ArticleController.js.map

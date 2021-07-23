@@ -16,8 +16,17 @@ class ApiRoutes {
         router_1.Router.get('/api/articles', () => __awaiter(this, void 0, void 0, function* () {
             return yield ArticleController_1.ArticleController.get();
         }));
-        router_1.Router.get('/api/article', () => __awaiter(this, void 0, void 0, function* () {
+        router_1.Router.get('/api/article/1', () => __awaiter(this, void 0, void 0, function* () {
             return yield ArticleController_1.ArticleController.getById();
+        }));
+        router_1.Router.post('/api/article/create', () => __awaiter(this, void 0, void 0, function* () {
+            return yield ArticleController_1.ArticleController.create();
+        }));
+        router_1.Router.post('/api/article/update', () => __awaiter(this, void 0, void 0, function* () {
+            return yield ArticleController_1.ArticleController.update();
+        }));
+        router_1.Router.post('/api/article/delete', () => __awaiter(this, void 0, void 0, function* () {
+            return yield ArticleController_1.ArticleController.delete();
         }));
     }
 }

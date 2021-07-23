@@ -34,4 +34,33 @@ export abstract class AbstractModel{
             console.log(e)
         }
     }
+
+    async create(data){
+        try {
+            return await Database.query(this.query.insert(data))
+        }catch (e){
+            console.log(e)
+        }
+    }
+
+    async update(data){
+        try {
+            const column = data.column
+            const filterColumn = data.filterColumn
+            const newData = data.newData
+            const searchData = data.searchData
+
+            return await  Database.query(this.query.update(column, filterColumn, newData, searchData))
+        }catch (e) {
+            console.log(e)
+        }
+    }
+
+    async delete(id){
+        try {
+            return await Database.query(this.query.delete(id))
+        }catch (e) {
+            console.log(e)
+        }
+    }
 }

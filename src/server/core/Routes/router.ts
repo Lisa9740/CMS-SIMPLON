@@ -1,5 +1,5 @@
 import {Route} from "./route";
-import {MethodEnum} from "../Utils/methodEnum";
+import {MethodEnum} from "../Utils/Enum/methodEnum";
 
 export class Router {
     private static instance: Router;
@@ -25,8 +25,9 @@ export class Router {
         instance.add(MethodEnum.PUSH, url, callback);
     }
 
-    public delete(url, callback){
-        return this.routes.push(new Route(url, MethodEnum.DELETE, callback));
+    public static delete(url, callback){
+        const instance = this.getInstance()
+        instance.add(MethodEnum.DELETE, url, callback)
     }
 
     public static getAll():Route[]{
@@ -48,5 +49,6 @@ export class Router {
         }
         return Router.instance;
     }
+
 
 }
