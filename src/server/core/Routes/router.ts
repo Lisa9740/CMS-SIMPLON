@@ -1,5 +1,5 @@
 import {Route} from "./route";
-import {MethodEnum} from "../../utils/methodEnum";
+import {MethodEnum} from "../Utils/methodEnum";
 
 export class Router {
     private static instance: Router;

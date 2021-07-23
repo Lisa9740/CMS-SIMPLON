@@ -9,15 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const router_1 = require("./core/router");
+const router_1 = require("../core/Routes/router");
 const HomePageController_1 = require("../controller/HomePageController");
 const ArticleController_1 = require("../controller/ArticleController");
-const Viewer_1 = require("../templating/Viewer");
+const Viewer_1 = require("../core/Templating/Viewer");
 class Routes {
     static build() {
         router_1.Router.get('/', HomePageController_1.HomePageController.get);
         router_1.Router.get('/api/articles', () => __awaiter(this, void 0, void 0, function* () {
             return yield ArticleController_1.ArticleController.get();
+        }));
+        router_1.Router.get('/api/article', () => __awaiter(this, void 0, void 0, function* () {
+            return yield ArticleController_1.ArticleController.getById();
         }));
         router_1.Router.get('/404', function () {
             let view = Viewer_1.Viewer.make('home.ejs', { title: "Page Non Trouvée" });

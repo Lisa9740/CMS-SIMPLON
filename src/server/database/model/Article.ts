@@ -1,8 +1,8 @@
-import {ModelInterface} from "./core/interface/ModelInterface";
-import {AbstractModel} from "./core/Abstract";
-import {FieldTypeEnum} from "../../utils/fieldTypeEnum";
-import {Query} from "./core/Query";
-import {Field} from "./core/Field";
+import {ModelInterface} from "../../core/Model/interface/ModelInterface";
+import {AbstractModel} from "../../core/Model/Abstract";
+import {FieldTypeEnum} from "../../core/Utils/fieldTypeEnum";
+import {Query} from "../../core/Model/Query";
+import {Field} from "../../core/Model/Field";
 
 const table = 'article'
 const fields = [
@@ -16,6 +16,6 @@ class Article extends AbstractModel implements ModelInterface {
     table: string;
 }
 
-const article = new Article(table, fields);
+const article = new Article(table, fields, new Query());
 
 export default article;

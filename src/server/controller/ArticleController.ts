@@ -7,6 +7,11 @@ export class ArticleController{
         return data;
     }
 
+    public static async getById() {
+        let data = await article.findById('id', 1)
+        return data;
+    }
+
     public static post(request, response){
 
     }

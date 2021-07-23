@@ -1,9 +1,9 @@
 'use strict';
-import {Router} from "./src/server/routes/core/router";
-import {HttpUtils} from "./src/server/adapter/http";
-import {Request} from "./src/server/adapter/request";
-import {Response} from "./src/server/adapter/response";
-import {Route} from "./src/server/routes/core/route";
+import {Router} from "./src/server/core/Routes/router";
+import {HttpUtils} from "./src/server/core/Server/http";
+import {Request} from "./src/server/core/Server/request";
+import {Response} from "./src/server/core/Server/response";
+import {Route} from "./src/server/core/Routes/route";
 
 export class Server {
     private static instance: Server;
@@ -39,7 +39,7 @@ export class Server {
         this.getInstance().startServer()
     }
 
-    //
+
     private checkRoute(request) {
         let route: Route[] = Router.getAll().filter(function(element) {
             if(element.url === request.req.url && element.method === request.req.method){

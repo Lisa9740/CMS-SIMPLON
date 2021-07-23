@@ -1,5 +1,5 @@
 import {ServerResponse} from 'http';
-import {Viewer} from "../templating/Viewer";
+import {Viewer} from "../Templating/Viewer";
 
 export class Response{
     public res: ServerResponse

@@ -8,27 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ArticleController = void 0;
-const Article_1 = __importDefault(require("../database/model/Article"));
-class ArticleController {
-    static get() {
-        return __awaiter(this, void 0, void 0, function* () {
-            let data = yield Article_1.default.findAll();
-            return data;
-        });
+exports.Response = void 0;
+const Viewer_1 = require("../Templating/Viewer");
+class Response {
+    constructor(res) {
+        this.res = res;
     }
-    static getById() {
+    emit(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            let data = yield Article_1.default.findById('id', 1);
-            return data;
+            const d = yield Promise.resolve(data);
+            console.log(typeof data);
+            if (!Array.isArray(d) && d instanceof Viewer_1.Viewer) {
+                this.res.writeHead(200, { 'Content-Type': 'text/html' });
+                return this.res.end(d.render());
+            }
+            else {
+                this.res.writeHead(200, { 'Content-Type': 'application/json' });
+                return this.res.end(JSON.stringify(d));
+            }
         });
-    }
-    static post(request, response) {
     }
 }
-exports.ArticleController = ArticleController;
-//# sourceMappingURL=ArticleController.js.map
+exports.Response = Response;
+//# sourceMappingURL=response.js.map

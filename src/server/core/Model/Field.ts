@@ -1,4 +1,4 @@
-import {FieldInterface} from "./interface/fieldInterface";
+import {FieldInterface} from "./interface/FieldInterface";
 
 export class Field implements FieldInterface{
     constructor(

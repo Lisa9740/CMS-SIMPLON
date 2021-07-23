@@ -1,7 +1,9 @@
-import {Router} from "./core/router";
+import {Router} from "../core/Routes/router";
 import {HomePageController} from "../controller/HomePageController";
 import {ArticleController} from "../controller/ArticleController";
-import {Viewer} from "../templating/Viewer";
+import {Viewer} from "../core/Templating/Viewer";
+import {Request} from "../core/Server/request";
+
 
 export default class Routes{
 
@@ -11,6 +13,11 @@ export default class Routes{
         Router.get('/api/articles', async () => {
             return await ArticleController.get()
         })
+        Router.get('/api/article', async () => {
+
+            return await ArticleController.getById()
+        })
+
 
         Router.get('/404', function () {
             let view = Viewer.make('home.ejs', { title : "Page Non Trouvée"})

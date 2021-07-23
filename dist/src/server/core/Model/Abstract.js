@@ -8,27 +8,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ArticleController = void 0;
-const Article_1 = __importDefault(require("../database/model/Article"));
-class ArticleController {
-    static get() {
+exports.AbstractModel = void 0;
+const database_1 = require("../Database/conf/database");
+class AbstractModel {
+    constructor(table, fields, query) {
+        this.table = table;
+        this.fields = fields;
+        this.query = query;
+    }
+    findAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            let data = yield Article_1.default.findAll();
-            return data;
+            let datas;
+            try {
+                datas = yield database_1.Database.query(this.query.select(this.table, this.fields));
+                return datas;
+            }
+            catch (e) {
+                console.log(e);
+            }
         });
     }
-    static getById() {
+    findById(id, value) {
         return __awaiter(this, void 0, void 0, function* () {
-            let data = yield Article_1.default.findById('id', 1);
-            return data;
+            let datas;
+            try {
+                datas = yield database_1.Database.query(this.query.select(this.table, this.fields, id, value, true));
+                return datas;
+            }
+            catch (e) {
+                console.log(e);
+            }
         });
-    }
-    static post(request, response) {
     }
 }
-exports.ArticleController = ArticleController;
-//# sourceMappingURL=ArticleController.js.map
+exports.AbstractModel = AbstractModel;
+//# sourceMappingURL=Abstract.js.map
