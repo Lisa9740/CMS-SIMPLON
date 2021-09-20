@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const router_1 = require("../core/Routes/router");
+const router_1 = require("../../core/Routes/router");
 const HomePageController_1 = require("../controller/HomePageController");
-const Viewer_1 = require("../core/Templating/Viewer");
+const Viewer_1 = require("../../core/Templating/Viewer");
 class Routes {
     static build() {
         router_1.Router.get('/', HomePageController_1.HomePageController.get);

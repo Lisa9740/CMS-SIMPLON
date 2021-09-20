@@ -1,4 +1,5 @@
 import article from "../database/model/Article";
+import {Request} from "../../core/Server/request";
 
 export class ArticleController{
 
@@ -10,16 +11,10 @@ export class ArticleController{
         return await article.findById(1);
     }
 
-    public static async create() {
-        let data = {
-            id : 3,
-            title: 'Je suis un article',
-            content: 'test test content',
-            author: 'Alison'
-        }
-
+    public static async create(request:Request) {
+        console.log("tesst " + request)
         try {
-            return await article.create(data)
+            return await article.create(request)
         }catch (e) {
             console.log(e)
         }

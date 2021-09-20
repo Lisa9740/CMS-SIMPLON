@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const router_1 = require("../../core/Routes/router");
+const router_1 = require("../../../core/Routes/router");
 const ArticleController_1 = require("../../controller/ArticleController");
 class ApiRoutes {
     static buildApi() {
@@ -19,8 +19,8 @@ class ApiRoutes {
         router_1.Router.get('/api/article/1', () => __awaiter(this, void 0, void 0, function* () {
             return yield ArticleController_1.ArticleController.getById();
         }));
-        router_1.Router.post('/api/article/create', () => __awaiter(this, void 0, void 0, function* () {
-            return yield ArticleController_1.ArticleController.create();
+        router_1.Router.post('/api/article/create', (req) => __awaiter(this, void 0, void 0, function* () {
+            return yield ArticleController_1.ArticleController.create(req);
         }));
         router_1.Router.post('/api/article/update', () => __awaiter(this, void 0, void 0, function* () {
             return yield ArticleController_1.ArticleController.update();

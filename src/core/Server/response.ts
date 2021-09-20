@@ -29,4 +29,8 @@ export class Response{
             return this.res.end(Router.find('/404').pop().callback())
         }
     }
+
+    public static instance(req: ServerResponse){
+        return new Response(req)
+    }
 }

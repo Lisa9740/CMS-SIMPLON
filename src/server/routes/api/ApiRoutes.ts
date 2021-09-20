@@ -1,6 +1,6 @@
-import {Router} from "../../core/Routes/router";
+import {Router} from "../../../core/Routes/router";
 import {ArticleController} from "../../controller/ArticleController";
-import {Request} from "../../core/Server/request";
+import {Request} from "../../../core/Server/request";
 
 export default class ApiRoutes{
 
@@ -12,8 +12,8 @@ export default class ApiRoutes{
             return await ArticleController.getById()
         })
 
-        Router.post('/api/article/create', async () =>{
-            return await  ArticleController.create()
+        Router.post('/api/article/create', async (req: Request) =>{
+            return await  ArticleController.create(req)
         })
 
         Router.post('/api/article/update', async () =>{

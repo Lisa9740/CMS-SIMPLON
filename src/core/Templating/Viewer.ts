@@ -21,7 +21,6 @@ export class Viewer {
     }
 
     public readFile(file: string){
-        return fs.readFileSync( './src/views/' + file, 'utf8');
+        return fs.readFileSync( './src/server/views/' + file, 'utf8');
     }
-
 }

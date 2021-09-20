@@ -2,5 +2,8 @@ export enum MethodEnum {
     GET = 'GET',
     POST = 'POST',
     PUSH = 'PUSH',
-    DELETE = 'DELETE'
+    DELETE = 'DELETE',
+    PATCH = 'PATCH',
+    PUT = 'PUT',
+
 }

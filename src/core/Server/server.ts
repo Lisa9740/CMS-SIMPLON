@@ -21,13 +21,13 @@ export class Server {
 
     private startServer() {
         const http = HttpUtils.http()
-        const server = http.createServer((request: any, response :any)=>{
-            const req = new Request(request)
-            const res = new Response(response)
-            const data =  this.checkRoute(req)
+        const server = http.createServer(async (request: any, response: any) => {
+            const req = await Request.instance(request)
+            const res = Response.instance(response)
+            const data = this.checkRoute(req)
 
-            if (data){
-                res.emit(data)
+            if (data) {
+                 return res.emit(data)
             }
         });
 
@@ -48,6 +48,10 @@ export class Server {
             }
             return;
         })
+
+        if(request.req.body){
+            console.log("checkRoute : request.body " + request.req.body)
+        }
 
         if (route && route.length > 0){
             return route.pop().callback();

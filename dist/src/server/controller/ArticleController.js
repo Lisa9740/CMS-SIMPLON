@@ -25,16 +25,11 @@ class ArticleController {
             return yield Article_1.default.findById(1);
         });
     }
-    static create() {
+    static create(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            let data = {
-                id: 3,
-                title: 'Je suis un article',
-                content: 'test test content',
-                author: 'Alison'
-            };
+            console.log("tesst " + request);
             try {
-                return yield Article_1.default.create(data);
+                return yield Article_1.default.create(request);
             }
             catch (e) {
                 console.log(e);

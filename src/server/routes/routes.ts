@@ -1,8 +1,8 @@
-import {Router} from "../core/Routes/router";
+import {Router} from "../../core/Routes/router";
 import {HomePageController} from "../controller/HomePageController";
 import {ArticleController} from "../controller/ArticleController";
-import {Viewer} from "../core/Templating/Viewer";
-import {Request} from "../core/Server/request";
+import {Viewer} from "../../core/Templating/Viewer";
+import {Request} from "../../core/Server/request";
 
 
 export default class Routes{
