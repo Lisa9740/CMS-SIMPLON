@@ -17,8 +17,8 @@ const response_1 = require("./response");
 require('dotenv').config();
 class Server {
     constructor() {
-        this.SERVER_ADDRESS = process.env.SERVER_ADDRESS || '0.0.0.0';
-        this.SERVER_PORT = process.env.PORT || 3000;
+        this.SERVER_ADDRESS = process.env.SERVER_ADDRESS;
+        this.SERVER_PORT = process.env.PORT || 4000;
     }
     static getInstance() {
         if (!this.instance) {
@@ -31,8 +31,9 @@ class Server {
         const server = http.createServer((request, response) => __awaiter(this, void 0, void 0, function* () {
             const req = yield request_1.Request.instance(request);
             const res = response_1.Response.instance(response);
-            const data = this.checkRoute(req);
+            const data = yield this.checkRoute(req);
             if (data) {
+                console.log("checkroute", data);
                 return res.emit(data);
             }
         }));
@@ -44,21 +45,22 @@ class Server {
         this.getInstance().startServer();
     }
     checkRoute(request) {
-        let route = router_1.Router.getAll().filter(function (element) {
-            if (element.url === request.req.url && element.method === request.req.method) {
-                return element;
+        return __awaiter(this, void 0, void 0, function* () {
+            let route = router_1.Router.getAll().filter(function (element) {
+                if (element.url === request.req.url && element.method === request.req.method) {
+                    return element;
+                }
+                return;
+            });
+            if (route && route.length > 0) {
+                const data = yield route.pop().callback(request);
+                console.log(typeof data);
+                return data;
             }
-            return;
+            else {
+                return router_1.Router.find('/404').pop().callback();
+            }
         });
-        if (request.req.body) {
-            console.log("checkRoute : request.body " + request.req.body);
-        }
-        if (route && route.length > 0) {
-            return route.pop().callback();
-        }
-        else {
-            return router_1.Router.find('/404').pop().callback();
-        }
     }
 }
 exports.Server = Server;

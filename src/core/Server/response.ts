@@ -5,7 +5,7 @@ import {Router} from "../Routes/router";
 export class Response{
     public res: ServerResponse
 
-    constructor(res : ServerResponse) {
+    constructor(res: ServerResponse) {
         this.res = res
     }
 
@@ -20,8 +20,9 @@ export class Response{
     }
 
     async emit(data){
-        const d:any =  await Promise.resolve(data)
-
+        console.log("data", data)
+        const d:any =  await data
+        console.log("d", data)
         try{
             return  this.res.end(this.setHeader(d));
         }catch (e){

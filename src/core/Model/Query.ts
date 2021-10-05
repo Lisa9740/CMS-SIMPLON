@@ -34,12 +34,12 @@ export class Query {
     insert(data) {
         let verifyArray = new VerifyArray()
         let fields = []
-
-        if (verifyArray.isSame(Object.keys(data), this.sqlTableField(fields))){
+        try {
+        // if (verifyArray.isSame(Object.keys(data), this.sqlTableField(fields))){
             return 'INSERT INTO ' + this.table + '(' + this.sqlDataField(this.field) +') VALUES ('+ this.sqlDataValue(data) +')'
-        }else{
-            throw new Error('Une erreur est survenue')
-        }
+         }catch(e){
+             throw new Error('Une erreur est survenue')
+         }
     }
 
     update(column, filterColumn, newData,  searchedData){

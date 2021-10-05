@@ -28,7 +28,9 @@ class Response {
     }
     emit(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const d = yield Promise.resolve(data);
+            console.log("data", data);
+            const d = yield data;
+            console.log("d", data);
             try {
                 return this.res.end(this.setHeader(d));
             }

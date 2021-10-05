@@ -28,10 +28,11 @@ class Query {
     insert(data) {
         let verifyArray = new verifyArray_1.VerifyArray();
         let fields = [];
-        if (verifyArray.isSame(Object.keys(data), this.sqlTableField(fields))) {
+        try {
+            // if (verifyArray.isSame(Object.keys(data), this.sqlTableField(fields))){
             return 'INSERT INTO ' + this.table + '(' + this.sqlDataField(this.field) + ') VALUES (' + this.sqlDataValue(data) + ')';
         }
-        else {
+        catch (e) {
             throw new Error('Une erreur est survenue');
         }
     }

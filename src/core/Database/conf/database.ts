@@ -4,14 +4,13 @@ require('dotenv').config()
 export class Database{
     private static connect(){
         return  mysql.createConnection({
-            host: process.env.HOST_MACHINE_MYSQL_HOST ,
+            host: process.env.HOST_MACHINE_MYSQL_HOST || "localhost" ,
             port: process.env.HOST_MACHINE_MYSQL_PORT,
             user: process.env.MYSQL_USER,
             database: process.env.MYSQL_DATABASE,
             password: process.env.MYSQL_PASSWORD
         });
     }
-
 
     static query(sqlQuery){
         let db = this.connect();

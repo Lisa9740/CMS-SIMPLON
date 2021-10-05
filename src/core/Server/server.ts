@@ -4,13 +4,14 @@ import {HttpUtils} from "./http";
 import {Request} from "./request";
 import {Response} from "./response";
 import {Route} from "../Routes/route";
+import {IncomingMessage, ServerResponse} from "http";
 require('dotenv').config()
 
 export class Server {
     private static instance: Server;
 
-    SERVER_ADDRESS:any = process.env.SERVER_ADDRESS || '0.0.0.0';
-    SERVER_PORT:any = process.env.PORT || 3000;
+    SERVER_ADDRESS:any = process.env.SERVER_ADDRESS;
+    SERVER_PORT:any = process.env.PORT || 4000;
 
     private static getInstance(): Server {
         if (!this.instance) {
@@ -21,12 +22,13 @@ export class Server {
 
     private startServer() {
         const http = HttpUtils.http()
-        const server = http.createServer(async (request: any, response: any) => {
+        const server = http.createServer(async (request: IncomingMessage, response: ServerResponse) => {
             const req = await Request.instance(request)
             const res = Response.instance(response)
-            const data = this.checkRoute(req)
+            const data = await  this.checkRoute(req)
 
             if (data) {
+                console.log("checkroute", data)
                  return res.emit(data)
             }
         });
@@ -41,22 +43,21 @@ export class Server {
     }
 
 
-    private checkRoute(request) {
-        let route: Route[] = Router.getAll().filter(function(element) {
-            if(element.url === request.req.url && element.method === request.req.method){
+    private async checkRoute(request) {
+        let route: Route[] = Router.getAll().filter(function (element) {
+            if (element.url === request.req.url && element.method === request.req.method) {
                 return element
             }
             return;
         })
 
-        if(request.req.body){
-            console.log("checkRoute : request.body " + request.req.body)
-        }
+        if (route && route.length > 0) {
+            const data = await route.pop().callback(request);
 
-        if (route && route.length > 0){
-            return route.pop().callback();
-        }else{
-           return Router.find('/404').pop().callback()
+            console.log(typeof  data)
+            return data;
+        } else {
+            return Router.find('/404').pop().callback()
         }
     }
 }

@@ -18,17 +18,60 @@ class Request {
         this.req = req;
         this.method = req.method;
         this.url = req.url;
+        this.data = null;
+    }
+    setData() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let body;
+            switch (this.req.method) {
+                case methodEnum_1.MethodEnum.GET:
+                    this.url = url.parse(this.req.url).pathname;
+                    this.data = url.parse(this.req.url).query ? this.parseParams(url.parse(this.req.url).query) : {};
+                    break;
+                case methodEnum_1.MethodEnum.POST:
+                    body = yield this.parseBody(this.req);
+                    this.data = { body };
+                    break;
+                case methodEnum_1.MethodEnum.PATCH:
+                    this.data = yield this.parseBody(this.req);
+                    break;
+                case methodEnum_1.MethodEnum.PUT:
+                    this.data = yield Promise.resolve(this.parseBody(this.req));
+                    break;
+                case methodEnum_1.MethodEnum.DELETE:
+                    this.data = yield Promise.resolve(this.parseBody(this.req));
+                    break;
+                default:
+                    break;
+            }
+        });
     }
     parseBody(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Promise(function (resolve, reject) {
-                let body = '';
-                req.on('data', chunk => {
-                    body += chunk.toString();
+            let body = [];
+            function parseUrlEncoded(parsedBody) {
+                let dataSplited = parsedBody.split('&');
+                let dataObject = {};
+                dataSplited.forEach((data) => {
+                    let tab = data.split('=');
+                    let key = tab[0];
+                    let value = tab[1];
+                    dataObject[key] = value;
                 });
-                req.on('end', () => {
-                    body = body ? parse(body) : body;
-                    resolve(body ? body : {});
+                return dataObject;
+            }
+            return new Promise(function (resolve, reject) {
+                req.on('data', (chunk) => {
+                    body.push(chunk);
+                }).on('end', () => {
+                    let headerType = req.headers['content-type'];
+                    const parsedBody = Buffer.concat(body).toString();
+                    if (headerType == "application/json")
+                        return resolve(JSON.parse(parsedBody));
+                    if (headerType == "application/x-www-form-urlencoded")
+                        return resolve(parseUrlEncoded(parsedBody));
+                    else
+                        return resolve(parsedBody);
                 });
             });
         });
@@ -36,37 +79,11 @@ class Request {
     parseParams(strParams) {
         return JSON.parse('{"' + strParams.replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
     }
-    setData(req) {
-        return __awaiter(this, void 0, void 0, function* () {
-            switch (req.method) {
-                case methodEnum_1.MethodEnum.GET:
-                    this.url = url.parse(req.url).pathname;
-                    this.data = url.parse(req.url).query ? this.parseParams(url.parse(req.url).query) : {};
-                    break;
-                case methodEnum_1.MethodEnum.POST:
-                    this.data = yield Promise.resolve(this.parseBody(req));
-                    break;
-                case methodEnum_1.MethodEnum.PATCH:
-                    this.data = yield Promise.resolve(this.parseBody(req));
-                    break;
-                case methodEnum_1.MethodEnum.PUT:
-                    this.data = yield Promise.resolve(this.parseBody(req));
-                    break;
-                case methodEnum_1.MethodEnum.DELETE:
-                    this.data = yield Promise.resolve(this.parseBody(req));
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
     static instance(req) {
         return __awaiter(this, void 0, void 0, function* () {
             const request = new Request(req);
-            if (request) {
-                yield request.setData(req);
-                return request;
-            }
+            yield request.setData();
+            return request;
         });
     }
 }

@@ -11,10 +11,10 @@ export class ArticleController{
         return await article.findById(1);
     }
 
-    public static async create(request:Request) {
-        console.log("tesst " + request)
+    public static async create(request: any) {
+
         try {
-            return await article.create(request)
+            return await article.create(request.data.body)
         }catch (e) {
             console.log(e)
         }

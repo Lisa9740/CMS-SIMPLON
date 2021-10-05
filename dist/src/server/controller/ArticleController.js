@@ -27,9 +27,8 @@ class ArticleController {
     }
     static create(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("tesst " + request);
             try {
-                return yield Article_1.default.create(request);
+                return yield Article_1.default.create(request.data.body);
             }
             catch (e) {
                 console.log(e);
